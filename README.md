@@ -1,5 +1,7 @@
-<h1>Group 25-Assignment 2</h1>
+<h1>Individual Assignment 3, extended from Group25 Assignment 2</h1>
 <h1>Project name: AutoBot</h1>
+<h1>Developer Name: Kenny Ho (25226151)</h1>
+
 
 <h2>About the project</h2>
 Our project is called Autobot and is essentially an AI that assists a user in picking a vehicle. This is done by asking the user a series of questions which helps Autobot predict what the user will prefer. Autobot is mainly for users who may have limited knowledge of what type of vehicle they are interested in.
@@ -12,5 +14,11 @@ In VehicleList.py the codes are organized into 4 parts sepearted by comments.
 2. Text input for text matching check
 3. FUnction for text finding 
 4. methods for compiling 
+5. Sentiment analysis function
+
+<h2>Features</h2>
+1. Sentiment analysis
+the system can detects words and phases from sentence and give it a float value from 1.0 to -1.0 which represent positive or negative sentiment. 
+2. 
 
 
