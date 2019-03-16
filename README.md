@@ -1,6 +1,6 @@
 <h1>Individual Assignment 3, extended from Group25 Assignment 2</h1>
 <h1>Project name: AutoBot</h1>
-<h1>Developer Name: Kenny Ho (25226151)</h1>
+<h2>Developer Name: Kenny Ho (25226151)</h2>
 
 
 <h2>About the project</h2>
