@@ -25,7 +25,7 @@ In VehicleList.py the codes are organized into serveral parts sepearted by comme
 The system can detects words and phases from sentence and give it a float value from 1.0 to -1.0 which represent positive or negative sentiment. 
 <li>Named Entity Recognition</li>
  After the implementation of named entity recognition, the program can read a paragraph or text, and recognize the following tags:
-  <ul>
+  <ol>
   <li>geo = Geographical Entity</li>
   <li>org = Organization</li>
   <li>per = Person</li>
@@ -34,7 +34,7 @@ The system can detects words and phases from sentence and give it a float value 
   <li>art = Artifact</li>
   <li>eve = Event</li>
   <li>nat = Natural Phenomenon</li> 
-  </ul>
+  </ol>
 </ul>
 
 
