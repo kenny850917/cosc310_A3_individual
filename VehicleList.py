@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+from nltk import sent_tokenize, word_tokenize, pos_tag, ne_chunk
 import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import names
@@ -376,14 +377,24 @@ def predict(sentence):
 
     print(output)
 
+    # for testing purpose
+    # print('Positive: ' + str(float(pos) / len(words)))
+    # print('Negative: ' + str(float(neg) / len(words)))
 
-    #for testing purpose
-    #print('Positive: ' + str(float(pos) / len(words)))
-    #print('Negative: ' + str(float(neg) / len(words)))
+    # NER function
+
+
+def extract_entities(text):
+        entities = []
+        for sentence in sent_tokenize(text):
+            chunks = ne_chunk(pos_tag(word_tokenize(sentence)))
+        entities.extend([chunk for chunk in chunks if hasattr(chunk, 'label')])
+        return entities
 
 
 
-#-------------------------------------------Code for actual program-----------------------------------------------
+
+# -------------------------------------------Code for actual program-----------------------------------------------
 print(random.choice(welcome))
 print("We currently have "+str(len(vehicleList))+" vehicles in our inventory.")
 sentance = input()
@@ -401,10 +412,12 @@ time.sleep(1)
 print(" . ")
 time.sleep(1)
 check_name(username)
+print(extract_entities(username))
 sentance = input("How is your day going?\n")
 time.sleep(1)
 print(" . ")
 predict(sentance)
+
 time.sleep(1)
 print(" . ")
 time.sleep(1)
