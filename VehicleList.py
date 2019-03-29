@@ -248,7 +248,7 @@ def check_brand(sentance):
             print(" . ")
             time.sleep(1)
             print(" . ")
-            time.sleep(1)
+            time.sleep(0.2)
             uservehicle.setbrand(brand)
 def check_fuel(sentence):
    words = sentence.split()
@@ -258,7 +258,7 @@ def check_fuel(sentence):
            fuel_eff = input("Fuel efficiency level(in mpg): ")
            time.sleep(1)
            print(" . ")
-           time.sleep(1)
+           time.sleep(0.2)
            print(" . ")
            time.sleep(1)
            uservehicle.setfueleff(fuel_eff)
