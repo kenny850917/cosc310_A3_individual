@@ -2,10 +2,14 @@ import random
 import sys
 import time
 from nltk import sent_tokenize, word_tokenize, pos_tag, ne_chunk
-import nltk.classify.util
+from spellchecker import SpellChecker
+import re
 from nltk.classify import NaiveBayesClassifier
-from nltk.corpus import names
+from random import randrange
+
+
 class Vehicle(object):
+
 
     def __init__(self, price, type, seats, brand, name, fueleff):
 
@@ -192,40 +196,55 @@ ending_i = ("yes", "thanks", "good", "yea", "yeah","sure","cool","absolutely","o
 def tostring(Vehicle):
     print("Here is a/an "+Vehicle.type+". \nIt is a 2019 "+Vehicle.brand+" "+Vehicle.name+", it seats "+str(Vehicle.seats)+" \nand gets "+str(Vehicle.fueleff)+
           " miles to the gallon. \nYou can walk away with this "+Vehicle.type+" for $"+str(Vehicle.price))
-    if (Vehicle.fueleff > 100):
+    if Vehicle.fueleff > 100:
 
         print("This vehicle is also electric!")
 
-from random import randrange
+
+
 #Method that takes random car from list. Once we have narrowed down the list, we can use this to show the user a possible car match
+
+
 def getcar(list):
     index = randrange(len(list))
     vehicle = list.pop(index)
     tostring(vehicle)
     return vehicle
+
+
 def check_greeting(sentance):
     words = sentance.split()
     for word in words:
         if word.lower() in greetings_i:
             print (random.choice(greetings_r))
+
+
 def check_greeting2(sentance):
     words = sentance.split()
     for word in words:
         if word.lower() in greetings2_i:
             print (random.choice(greetings2_r))
+
+
 def check_good(sentance):
     words = sentance.split()
     for word in words:
         if word.lower() in good_i:
             print (random.choice(good_r))
+
+
 def check_bad(sentance):
     words = sentance.split()
     for word in words:
         if word.lower() in bad_i:
             print (random.choice(bad_r))
+
+
 def check_name(username):
     name_r = ("Nice to meet you " + username, "Pleasure to meet you " + username, "Well " + username + ", I am at your service")
     print(random.choice(name_r))
+
+
 def check_seats(sentance):
     words = sentance.split()
     for word in words:
@@ -238,6 +257,10 @@ def check_seats(sentance):
             print(" . ")
             time.sleep(1)
             uservehicle.setseats(seats)
+        else:
+            return False
+
+
 def check_brand(sentance):
     words = sentance.split()
     for word in words:
@@ -250,6 +273,10 @@ def check_brand(sentance):
             print(" . ")
             time.sleep(0.2)
             uservehicle.setbrand(brand)
+        else:
+            return False
+
+
 def check_fuel(sentence):
    words = sentence.split()
    for word in words:
@@ -262,6 +289,11 @@ def check_fuel(sentence):
            print(" . ")
            time.sleep(1)
            uservehicle.setfueleff(fuel_eff)
+       else:
+           return False
+
+
+
 def check_price(sentence):
    words = sentence.split()
    for word in words:
@@ -274,6 +306,10 @@ def check_price(sentence):
            print(" . ")
            time.sleep(1)
            uservehicle.setprice(price)
+       else:
+           return False
+
+
 def check_type(sentance):
     words = sentance.split()
     for word in words:
@@ -286,14 +322,16 @@ def check_type(sentance):
             print(" . ")
             time.sleep(1)
             uservehicle.settype(type.lower())
+        else:
+            return False
+
+
 def runagain():
     ending_r = ("My pleasure " + username + ", have a great day!", "Well have a wonderful day " + username,"I'm glad I could help, bye for now!")
     sentance = input("Would you like to search for another vehicle?")
     time.sleep(1)
     print(" . ")
-    time.sleep(1)
-    print(" . ")
-    time.sleep(1)
+
     words = sentance.split()
     for word in words:
         if word.lower() in greetings_i:
@@ -309,38 +347,34 @@ def check_ending(sentance, username,vehicle):
     for word in words:
         if word.lower() in ending_i:
             finance = input("Would you like to know lease option for this vehicle?")
-            time.sleep(1)
+            spell_ck(finance)
+            time.sleep(0.5)
             print(" . ")
-            time.sleep(1)
-            print(" . ")
-            time.sleep(1)
+
             # entering okay does'nt work
 
             words = finance.split()
             for word in words:
                 if word.lower() in ending_i:
                     years = input("In how many years would you like to pay off your " + vehicle.name + "?")
-                    time.sleep(1)
+                    time.sleep(0.5)
                     print(" . ")
-                    time.sleep(1)
-                    print(" . ")
-                    time.sleep(1)
-                    months = int(years) * 26
-                    print("The rate would be $"+str(round(vehicle.price/months,2))+" bi-weekly for the next "+str(years)+" year/years")
 
+                    months = int(years) * 26
+                    print("The rate would be $"+str(round(vehicle.price/months, 2))+" bi-weekly for the next "+str(years)+" year/years")
 
             return True
     return False
 
-#-----------------------------sentiment analysis----------------------------------
+# -----------------------------------sentiment analysis----------------------------------------------
 
 
 def word_feats(words):
     return dict([(word, True) for word in words])
 
 
-positive_vocab = ['awesome', 'outstanding', 'fantastic', 'terrific', 'good', 'nice', 'great', ':)']
-negative_vocab = ['bad', 'terrible', 'useless', 'hate', ':(', 'not', 'tired']
+positive_vocab = ['awesome', 'outstanding', 'fantastic', 'terrific', 'good', 'nice', 'great', ':)', 'yes', 'sure']
+negative_vocab = ['bad', 'terrible', 'useless', 'hate', ':(', 'not', 'tired', 'no', 'do not']
 neutral_vocab = ['car', 'the', 'sound', 'was', 'is', 'price', 'did', 'know', 'words', 'not', 'okay']
 
 positive_features = [(word_feats(pos), 'pos') for pos in positive_vocab]
@@ -351,7 +385,7 @@ train_set = negative_features + positive_features + neutral_features
 
 classifier = NaiveBayesClassifier.train(train_set)
 
-# Predict
+# ----------------------------------Predict, function extend sentiment-------------------------------------------
 
 
 def predict(sentence):
@@ -368,12 +402,12 @@ def predict(sentence):
         if classResult == 'pos':
             pos = pos + 1
 
-    if abs(pos-neg) < 0.2:
-        output = "I see, starting with a normal day..."
-    elif pos > neg:
-        output = "I can tell you're having a good day"
+    if pos > neg:
+        output = "I can tell you're having a good day, getting a new car would be nice"
     elif neg > pos:
-        output = "Sorry to hear that you're feeling sad"
+        output = "Sorry to hear that you're feeling sad, lets get you a car so you can feel happy"
+    elif abs(pos - neg) < 0.1:
+        output = "I see, lets enlighten you with a new car"
 
     print(output)
 
@@ -381,7 +415,7 @@ def predict(sentence):
     # print('Positive: ' + str(float(pos) / len(words)))
     # print('Negative: ' + str(float(neg) / len(words)))
 
-    # NER function
+    # -------------------------------------------NER function------------------------------------------------------------
 
 
 def extract_entities(text):
@@ -391,36 +425,60 @@ def extract_entities(text):
         entities.extend([chunk for chunk in chunks if hasattr(chunk, 'label')])
         return entities
 
+    # ---------------------------------------spelling check-----------------------------------------------------------
 
 
+def spell_ck(userinput):
+    spell = SpellChecker()
 
+    # find those words that may be misspelled
+    sentence = userinput
+    wordList = re.sub("[^\w]", " ", sentence).split()
+    misspelled = spell.unknown(wordList)
+
+    for words in misspelled:
+        # Get the one `most likely` answer
+        print("for " + words + " did you mean " + spell.correction(words))
+        reinput = input('enter "y" if the correction is what you want')
+        if reinput == 'y':
+            re_enter = input('correct the spelling and try again')
+            spell_ck(re_enter)
+            return re_enter
+        else:
+            spell_ck(userinput)
+
+
+# ----------check seats-------
+def check_matching(match):
+    sentance = match
+    while check_seats(sentance) is False and check_brand(sentance) is False and check_type(sentance) is False and check_fuel(sentance)is False and check_price(sentance)is False:
+        print('you have to enter at least one category')
+        sentance = input(
+            "Currently we support the following features: \n -Fuel Efficiency \n -Seating \n -Price \n -Type of vehicle\n -Brand\n")
+
+    return sentance
 # -------------------------------------------Code for actual program-----------------------------------------------
-print(random.choice(welcome))
-print("We currently have "+str(len(vehicleList))+" vehicles in our inventory.")
+print("")
+print(random.choice(welcome)+'\n')
+print("I currently have "+str(len(vehicleList))+" vehicles in our inventory.")
+
 sentance = input()
 time.sleep(0.5)
 print(" . ")
-time.sleep(0.5)
-print(" . ")
-time.sleep(1)
-check_greeting(sentance)
-check_greeting2(sentance)
+spell_ck(sentance)
+predict(sentance)
+#check_greeting(sentance)
+#check_greeting2(sentance)
 username = input("Hi, what is your name?:")
-time.sleep(1)
-print(" . ")
-time.sleep(1)
-print(" . ")
-time.sleep(1)
-check_name(username)
-sentance = input("How is your day going? "+username+"\n")
-print(extract_entities(sentance))
+#check_name(username)
+sentiment = input("How is your day going?"+'\n')
+spell_ck(sentiment)
+print(extract_entities(sentiment))
 time.sleep(0.5)
 print(" . ")
 predict(sentance)
-
 time.sleep(1)
 print(" . ")
-time.sleep(1)
 check_bad(sentance)
 check_good(sentance)
 endconditionmain = False
@@ -428,20 +486,18 @@ while(endconditionmain==False):
     uservehicle = Vehicle(9999999, "", 0, "", "", 999)
     endcondition = False
     vehicleList = getVehicles()
-    print(username+"What are some important aspects you want in \nyour vehicle?")
+    print(username+" What are some important aspects you want in \nyour vehicle?")
 
     sentance = input(
         "Currently we support the following features: \n -Fuel Efficiency \n -Seating \n -Price \n -Type of vehicle\n -Brand\n")
-
+    spell_ck(sentance)
+    check_matching(sentance)
     check_seats(sentance)
-
     check_brand(sentance)
-
-    check_type(sentance)
-
     check_fuel(sentance)
-
     check_price(sentance)
+
+
     if (int(uservehicle.price) < 9999999):
         vehicleList = [vehicle for vehicle in vehicleList if vehicle.price <= int(uservehicle.price)]
     if (uservehicle.type != ""):
@@ -454,29 +510,20 @@ while(endconditionmain==False):
         vehicleList = [vehicle for vehicle in vehicleList if vehicle.seats == int(uservehicle.seats)]
     time.sleep(1)
     print(" . ")
-    time.sleep(1)
-    print(" . ")
-    time.sleep(1)
-    print(" . ")
-    time.sleep(1)
-    print(" . ")
-    time.sleep(1)
+
     print("\nI have found " + str(len(vehicleList)) + " vehicles that match your criteria!")
     while (endcondition == False):
         print("\n")
         if (len(vehicleList) == 0):
             print("I'm sorry, none of our cars match that criteria")
 
-
             break
 
         vehicle = getcar(vehicleList)
-        sentance = input("Are you happy with this vehicle?" )
-        time.sleep(1)
+        sentance = input("Are you happy with this vehicle?")
+        spell_ck(sentance)
+        time.sleep(0.5)
         print(" . ")
-        time.sleep(1)
-        print(" . ")
-        time.sleep(1)
         endcondition = check_ending(sentance, username, vehicle)
         if (len(vehicleList) < 1):
             print("I'm sorry, that is all the cars that match the given criteria.")
