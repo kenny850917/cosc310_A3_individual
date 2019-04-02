@@ -439,7 +439,7 @@ def spell_ck(userinput):
     for words in misspelled:
         # Get the one `most likely` answer
         print("for " + words + " did you mean " + spell.correction(words))
-        reinput = input('enter "y" if the correction is what you want')
+        reinput = input('enter "y" to re-enter sentence')
         if reinput == 'y':
             re_enter = input('correct the spelling and try again')
             spell_ck(re_enter)
@@ -470,6 +470,7 @@ predict(sentance)
 #check_greeting(sentance)
 #check_greeting2(sentance)
 username = input("Hi, what is your name?:")
+print(extract_entities(username))
 #check_name(username)
 sentiment = input("How is your day going?"+'\n')
 spell_ck(sentiment)
