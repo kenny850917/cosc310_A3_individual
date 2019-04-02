@@ -22,6 +22,10 @@ In VehicleList.py the codes are organized into serveral parts sepearted by comme
 
 <h2>Features</h2>
 <ul>
+ <li>Spelling Check</li>
+ The spelling check function takes a input sentence, break down into segments of words and check for spelling errors. It will provide the user with suggestions and let them re-enter the sentence. 
+ <li>Synonyms</li>
+ The algorithm takes a word and will provide similar synonyms based on the nltk packet imported from python library.
 <li>Sentiment analysis</li>
 The system can detects words and phases from sentence and give it a float value from 1.0 to -1.0 which represent positive or negative sentiment. 
 <li>Named Entity Recognition</li>
