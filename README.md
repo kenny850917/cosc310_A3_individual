@@ -24,6 +24,7 @@ In VehicleList.py the codes are organized into serveral parts sepearted by comme
 <ul>
  <li>Spelling Check</li>
  The spelling check function takes a input sentence, break down into segments of words and check for spelling errors. It will provide the user with suggestions and let them re-enter the sentence. 
+ <p>
  <i> example </i>
  Currently we support the following features: 
  -Fuel Efficiency 
@@ -33,7 +34,7 @@ In VehicleList.py the codes are organized into serveral parts sepearted by comme
  -Brand
  fuuel
 for fuuel did you mean fuel (spelling check here)
- 
+ </p>
  <li>Synonyms</li>
  The algorithm takes a word and will provide similar synonyms based on the nltk packet imported from python library.
  The function also takes user input and talk conversation with synonyms.
