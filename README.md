@@ -18,6 +18,9 @@ In VehicleList.py the codes are organized into serveral parts sepearted by comme
 <li>methods for compiling </li>
 <li>Sentiment analysis function</li>
 <li>Named Entity Recognition</li>
+<li>Synonyms</li>
+<li>Spelling Check</li>
+ 
 </ul>
 
 <h2>Features</h2>
