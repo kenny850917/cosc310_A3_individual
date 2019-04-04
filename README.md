@@ -8,7 +8,7 @@
 Our project is called Autobot and is essentially an AI that assists a user in picking a vehicle. This is done by asking the user a series of questions which helps Autobot predict what the user will prefer. Autobot is mainly for users who may have limited knowledge of what type of vehicle they are interested in.
 
 <h2>Navagation for software</h2>
-We organized all code in one class (VehicleList) for simplicity and ease of access. VehicleList initiates a database and adds all vehicles available. 
+We organized all code in one class (VehicleList) for simplicity and ease of access. VehicleList initiates a database and adds all vehicles available. The user can use this client not only to get vehicles but could also enjoy the conversation between a human like system. There isn't a manual, just act the same as talking to a normal person.
 <h2>Code organization</h2>
 In VehicleList.py the codes are organized into serveral parts sepearted by comments.
 <ul>
